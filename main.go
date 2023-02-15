@@ -8,6 +8,7 @@ import (
 
 var data_URL = os.Getenv("CARBOFRA_DATA_URL")
 var mongo_URL = os.Getenv("CARBOFRA_MONGO_URL")
+var wait_time = os.Getenv("CARBOFRA_WAIT_TIME")
 
 func main() {
 	start_time := time.Now()
@@ -44,4 +45,13 @@ func main() {
 		return
 	}
 	
+	if wait_time != "" {
+		duration, err := time.ParseDuration(wait_time)
+		if err != nil {
+			fmt.Println("Error while parsing wait time", err)
+			return
+		}
+		fmt.Println("Waiting for", duration.String())
+		time.Sleep(duration)
+	}
 }
